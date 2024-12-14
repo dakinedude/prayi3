@@ -78,9 +78,9 @@ func nextPrayer(calendar Calendar) string {
 
 			if now.Before(t) {
 				if prayer.name == "fajr" {
-					return fmt.Sprintf("%s: %s, soloppgang: %s", prayer.name, t.Format("15:04"), today.fajrSlutt)
+					return fmt.Sprintf("fajr: %s, soloppgang: %s", today.fajr, today.fajrSlutt)
 				} else if prayer.name == "isha" {
-					return fmt.Sprintf("%s: %s, midnatt: %s", prayer.name, t.Format("15:04"), Midnight(today.date, &calendar))
+					return fmt.Sprintf("isha: %s, midnatt: %s", today.isha, t.Format("15:04"))
 				} else {
 					return fmt.Sprintf("%s: %s", prayer.name, t.Format("15:04"))
 				}
