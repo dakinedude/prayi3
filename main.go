@@ -9,6 +9,7 @@ import (
 )
 
 func main() {
+	// insert proper format for csv
 	const prefix string = "Bonnetid_Oslo_"
 	const suffix string = ".csv"
 	const format string = "2006-01"
@@ -62,11 +63,11 @@ func nextPrayer(calendar Calendar) string {
 			name string
 			time string
 		}{
-			{"fajr", today.fajr},
+			{"fajr", today.fajrSlutt},
 			{"duhr", today.duhr},
 			{"asr", today.asr},
 			{"maghrib", today.maghrib},
-			{"isha", today.isha},
+			{"isha", Midnight(today.date, &calendar)},
 		}
 
 		for _, prayer := range prayerOrder {
