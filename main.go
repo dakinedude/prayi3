@@ -15,7 +15,8 @@ func main() {
 
 	mid := time.Now().Format(format)
 	fn := fmt.Sprintf("%s%s%s", prefix, mid, suffix)
-	file, err := os.Open(fmt.Sprintf("/home/mats/programming/go/bonnetid/%s", fn))
+	// insert proper path
+	file, err := os.Open(fmt.Sprintf("/home/mats/Downloads/%s", fn))
 	if err != nil {
 		fmt.Println("Error: File not found")
 		os.Exit(1)
@@ -49,6 +50,7 @@ func main() {
 
 func nextPrayer(calendar Calendar) string {
 	now := time.Now()
+	location := now.Location() // Get the local timezone
 
 	for i := 0; i < 2; i++ {
 		today, err := calendar.findDay(now.Format("02-01-2006"))
@@ -68,7 +70,7 @@ func nextPrayer(calendar Calendar) string {
 		}
 
 		for _, prayer := range prayerOrder {
-			t, err := time.Parse("02-01-2006 15:04", fmt.Sprintf("%s %s", today.date, prayer.time))
+			t, err := time.ParseInLocation("02-01-2006 15:04", fmt.Sprintf("%s %s", today.date, prayer.time), location)
 			if err != nil {
 				return fmt.Sprintf("Error parsing %s", prayer.name)
 			}
@@ -84,15 +86,8 @@ func nextPrayer(calendar Calendar) string {
 			}
 		}
 
-		// Move to the next day if no prayer time remains today.
 		now = now.Add(24 * time.Hour)
 	}
 
 	return "No upcoming prayer time"
-}
-
-func check(err error) {
-	if err != nil {
-		panic(err)
-	}
 }
