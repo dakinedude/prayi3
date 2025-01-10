@@ -87,7 +87,8 @@ func nextPrayer(calendar Calendar) string {
 			}
 		}
 
-		now = now.Add(24 * time.Hour)
+		now = time.Date(now.Year(), now.Month(), now.Day()+1, 0, 0, 0, 0, location)
+		// now = now.Add(24 * time.Hour)
 	}
 
 	return "No upcoming prayer time"
